@@ -30,6 +30,9 @@
       "description": "Activate the extension"
     }
   },
+  "background": {
+    "service_worker": "src/background.js"
+  },
   "action": {
     "default_popup": "src/components/popup/popup.html",
     "default_icon": {
@@ -48,7 +51,8 @@
     {
       "resources": [
         "src/components/basicDetails/BasicDetails.js",
-        "src/components/aboutDetails/AboutDetails.js"
+        "src/components/aboutDetails/AboutDetails.js",
+        "src/components/postsArticalDetails/PostArticalDetail.js"
       ],
       "matches": [
         "<all_urls>"

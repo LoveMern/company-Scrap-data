@@ -7,11 +7,30 @@
 </head>
 
 <body>
+
+  <label for="environment">Environment:</label>
+  <select id="environment">
+    <option value=""></option>
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="E">E</option>
+  </select>
+
+  <label for="numPosts">Number of Posts:</label>
+  <input type="number" id="numPosts" min="1" max="30" placeholder="Enter number of posts" />
+
+  <label for="numJobs">Number of Jobs:</label>
+  <input type="number" id="numJobs" min="1" max="30" placeholder="Enter number of jobs" />
+
+
   <h2>LinkedIn Profile Scraper...</h2>
   <button id="scrapeButton">
     <span id="buttonText">Scrape Profile</span>
     <span id="loader" class="loader" style="display: none;"></span>
   </button>
+
+  
 
   <ul id="profileList"></ul>
   <script src="popup.js"></script>
