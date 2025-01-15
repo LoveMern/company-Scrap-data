@@ -52,7 +52,8 @@
       "resources": [
         "src/components/basicDetails/BasicDetails.js",
         "src/components/aboutDetails/AboutDetails.js",
-        "src/components/postsArticalDetails/PostArticalDetail.js"
+        "src/components/postsArticalDetails/PostArticalDetail.js",
+        "src/components/jobsDetails/JobsDetails.js"
       ],
       "matches": [
         "<all_urls>"

@@ -18,11 +18,18 @@
   </select>
 
   <label for="numPosts">Number of Posts:</label>
-  <input type="number" id="numPosts" min="1" max="30" placeholder="Enter number of posts" />
+  <select id="numPosts">
+    <option value="">Select Time Range</option>
+    <option value="3">1-3 months</option>
+    <option value="6">1-6 months</option>
+  </select>
 
   <label for="numJobs">Number of Jobs:</label>
-  <input type="number" id="numJobs" min="1" max="30" placeholder="Enter number of jobs" />
-
+  <select id="numJobs">
+    <option value="">Select Time Range</option>
+    <option value="3">1-3 months</option>
+    <option value="6">1-6 months</option>
+  </select>
 
   <h2>LinkedIn Profile Scraper...</h2>
   <button id="scrapeButton">
@@ -30,7 +37,7 @@
     <span id="loader" class="loader" style="display: none;"></span>
   </button>
 
-  
+
 
   <ul id="profileList"></ul>
   <script src="popup.js"></script>

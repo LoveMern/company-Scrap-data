@@ -7,15 +7,14 @@ scrapeButton.addEventListener("click", () => {
   const buttonText = document.getElementById("buttonText");
   const loader = document.getElementById("loader");
 
-  // if (!environmentSelect.value || !numberOfPost.value || !numberOfJobs.value) {
-  //   alert("Please select Environment, Number of Posts and Number of Jobs Option for scraping collection");
-  //   return
-  // }
+  if (!environmentSelect.value || !numberOfPost.value || !numberOfJobs.value) {
+    alert("Please select Environment, Posts and Jobs Option for scraping collection");
+    return
+  }
 
   const environment = environmentSelect.value;
   const numPosts = parseInt(numberOfPost.value);
   const numJobs = parseInt(numberOfJobs.value);
-
 
   buttonText.textContent = "Scraping...";
   loader.style.display = "inline-block";

@@ -109,8 +109,6 @@ async function handleListSection(listSection) {
         if (anchor && anchor.innerText.trim() === "About") {
             anchor.click();
             await delay(1000);
-        } else {
-            console.log("About navigation not found!");
         }
     }
 }

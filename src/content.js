@@ -17,11 +17,12 @@ async function injectScript(scriptPath, functionName, environment, numPosts, num
 
 async function scrapeProfile(tabId, environment, numPosts, numJobs) {
     // console.log("Environment:", environment);
-    console.log("Number of Posts:", numPosts);
-    console.log("Number of Jobs:", numJobs);
+    // console.log("Number of Posts:", numPosts);
+    // console.log("Number of Jobs:", numJobs);
     await injectScript("basicDetails/BasicDetails.js", "extractBasicDetails");
     await injectScript("aboutDetails/AboutDetails.js", "AboutDetailsCollection");
-    await injectScript("postsArticalDetails/PostArticalDetail.js", "PostArticalDetails" , numPosts)
+    await injectScript("postsArticalDetails/PostArticalDetail.js", "PostArticalDetails", numPosts)
+    await injectScript("jobsDetails/JobsDetails.js", "JobsDetails", numJobs)
     console.log("All scripts executed in sequence.");
     chrome.runtime.sendMessage({ message: "SCRAPE_COMPLETE" });
 }

@@ -55,13 +55,11 @@ async function extractPageData() {
         const MainContent = document.querySelector("div.scaffold-layout__content--main-aside");
 
         if (!MainContent) {
-            console.error("Main content not found");
             return { title: "", date: "", description: "", images: [], link: "" };
         }
 
         const header = MainContent.querySelector("header.pt4");
         if (!header) {
-            console.error("Header section not found");
             return { title: "", date: "", description: "", images: [], link: "" };
         }
 
@@ -91,25 +89,9 @@ async function extractPageData() {
             }
         });
 
-        const dateString = MainContent.querySelector('time')
+        const date = MainContent.querySelector('time')
             ? MainContent.querySelector('time').innerText.trim()
             : "";
-
-        if (!dateString) {
-            console.error("Date not found");
-            return false
-        }
-
-        const articleDate = new Date(dateString);
-
-        const currentDate = new Date();
-        const threeMonthsAgo = new Date();
-        threeMonthsAgo.setMonth(currentDate.getMonth() - 3);
-
-        if (articleDate < threeMonthsAgo) {
-            console.log("Article is older than 3 months");
-            return { title: "", date: "", description: "", images: [], link: "" };
-        }
 
         const images = Array.from(articleContent.querySelectorAll('img'))
             .map(img => img.src)
@@ -122,7 +104,7 @@ async function extractPageData() {
         const fullDescription = description.join(' ');
         return {
             title,
-            date: dateString,
+            date,
             description: fullDescription,
             images,
             link,
@@ -132,10 +114,6 @@ async function extractPageData() {
         return { title: "", date: "", description: "", images: [], link: "" };
     }
 }
-
-
-
-
 
 
 chrome.commands.onCommand.addListener((command) => {

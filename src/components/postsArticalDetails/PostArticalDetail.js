@@ -3,20 +3,32 @@ function delay(ms) {
 }
 
 
-export async function PostArticalDetails(profileData) {
+export async function PostArticalDetails(profileData, numPosts) {
     await delay(2000);
     await handleListSection();
     await clickArticlesButton();
-
     async function loadAllSkills() {
         const htmlElement = document.documentElement;
         let hasMoreArticles = true;
         let allArticleData = [];
         let processedLinks = new Set();
 
+        function isDateWithinMonths(articleDate, numMonths) {
+            const currentDate = new Date();
+            const articleDateParsed = new Date(articleDate);
+            if (isNaN(articleDateParsed.getTime())) {
+                return false;
+            }
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth();
+            const articleYear = articleDateParsed.getFullYear();
+            const articleMonth = articleDateParsed.getMonth();
+            const diffInMonths = (currentYear - articleYear) * 12 + (currentMonth - articleMonth);
+            return diffInMonths <= numMonths;
+        }
+
         async function smoothScrollDown() {
             let lastScrollTop = htmlElement.scrollTop;
-
             return new Promise(resolve => {
                 let interval = setInterval(() => {
                     htmlElement.scrollBy(0, 200);
@@ -37,10 +49,8 @@ export async function PostArticalDetails(profileData) {
 
             if (loadMoreButton) {
                 loadMoreButton.click();
-                console.log('Clicked "Show more results" button');
                 await delay(3000);
             } else {
-                console.log('No more "Show more results" button found');
                 hasMoreArticles = false;
             }
 
@@ -61,7 +71,7 @@ export async function PostArticalDetails(profileData) {
 
             let linksURL = [];
 
-            articles.forEach(article => {
+            articles.forEach((article, index) => {
                 const articleLink = article.querySelector('a.update-components-article__image-link');
                 if (articleLink && articleLink.href && !processedLinks.has(articleLink.href)) {
                     processedLinks.add(articleLink.href);
@@ -87,22 +97,24 @@ export async function PostArticalDetails(profileData) {
                         );
                     });
 
-                    if (pageData === false) {
-                        console.log("Skipping article due to age restriction");
-                        break;
+                    const articleDate = pageData.date;
+                    if (!articleDate) {
+                        continue;
                     }
 
+                    if (!isDateWithinMonths(articleDate, numPosts)) {
+                        hasMoreArticles = false;
+                        break;
+                    }
                     await delay(2000);
                     allArticleData.push(pageData);
                     await delay(1500);
                 }
             }
-
             await processLinks(linksURL);
 
             const newScrollHeight = htmlElement.scrollHeight;
             if (newScrollHeight === initialScrollHeight) {
-                console.log('No new content loaded or scroll position stuck');
                 hasMoreArticles = false;
             }
         }
@@ -120,10 +132,7 @@ export async function PostArticalDetails(profileData) {
             console.error("Error:", response?.error);
         }
     });
-    console.log("profileData is here", profileData);
 }
-
-
 
 
 async function handleListSection() {
@@ -135,8 +144,6 @@ async function handleListSection() {
         if (anchor && anchor.innerText.trim() === "Posts") {
             anchor.click();
             await delay(1500);
-        } else {
-            console.log("About navigation not found!");
         }
     }
 }
